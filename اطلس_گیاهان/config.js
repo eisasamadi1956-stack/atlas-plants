@@ -1,0 +1,105 @@
+// ============================================================
+//  تنظیمات کلی برنامه
+// ============================================================
+
+export const CONFIG = {
+    // کلید ذخیره‌سازی در LocalStorage
+    DB_KEY: 'atlas_plants_db',
+
+    // فاصله زمانی بررسی آلارم‌ها (میلی‌ثانیه) - ۵ دقیقه
+    ALERT_INTERVAL: 300000,
+
+    // نام ماه‌های شمسی (به ترتیب صحیح)
+    PERSIAN_MONTHS: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
+
+    // لینک Google Sheets (لینک شما)
+    GOOGLE_SHEETS_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ1HYAcYrqRMuRslAvDEt2htlLdV5RTIR9COPa3ynnk2D6DoIXSoS0il9mD1N9ESDd5j6_tbcgAQ88N/pub?output=csv',
+
+    // رمز عبور مدیریت
+    ADMIN_PASSWORD: 'admin1404',
+
+    // ساختار پیش‌فرض یک گیاه (برای ایجاد نمونه جدید)
+    DEFAULT_PLANT: {
+        id: null,
+        code: '',
+        localName: '',
+        persianName: '',
+        family: '',
+        scientificName: '',
+        plantType: '',
+        englishName: '',
+        lifespan: '',
+        origin: '',
+        height: '',
+        width: '',
+        crownForm: '',
+        growthRate: '',
+        leafType: '',
+        leafColor: '',
+        fallColor: '',
+        flowerType: '',
+        flowerColor: '',
+        flowerSeason: '',
+        fruitTime: '',
+        rootSystem: '',
+        leafStatus: '',
+        light: '',
+        waterNeed: '',
+        heatTolerance: '',
+        droughtTolerance: '',
+        frostTolerance: '',
+        coldTolerance: '',
+        saltTolerance: '',
+        minTemp: '',
+        windTolerance: '',
+        waterSalt: '',
+        dustTolerance: '',
+        airPollution: '',
+        spacing: '',
+        plantingSeason: '',
+        holeDiameter: '',
+        holeDepth: '',
+        soilType: '',
+        phRange: '',
+        drainage: '',
+        mulch: '',
+        stake: '',
+        bedWidth: '',
+        waterFirstYear: '',
+        waterEstablished: '',
+        pruningNeed: '',
+        pruningType: '',
+        pests: '',
+        diseases: '',
+        fertilizer: '',
+        costPlanting: '',
+        price: '',
+        economicLife: '',
+        costMaintenance: '',
+        economicScore: '',
+        replacementCost: '',
+        ecoFunctions: '',
+        suitableUses: '',
+        adaptWater: '',
+        adaptClimate: '',
+        adaptHeat: '',
+        adaptCold: '',
+        adaptPotential: '',
+        adaptPriority: '',
+        adaptLimitations: '',
+        nHeight: '',
+        nPotSize: '',
+        nSurvival: '',
+        nAge: '',
+        nCollar: '',
+        nRoot: '',
+        techPattern: '',
+        techSetback: '',
+        techCombo: '',
+        techQty: '',
+        techWater: '',
+        imageData: '',
+        sprayMonth: '',
+        fertilizeMonth: ''
+    }
+};
