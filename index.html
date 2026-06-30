@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اطلس گیاهان - سازمان سیما، منظر و فضای سبز شهری ارومیه</title>
+    <style>
+        /* ====== استایل‌های اصلی ====== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Tahoma', 'Arial', sans-serif;
+            background: #eef4ee;
+            padding: 15px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* ====== هدر سازمان ====== */
+        .org-header {
+            background: linear-gradient(135deg, #0a1f12, #1a4a2a);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 16px 16px 0 0;
+            text-align: center;
+            border-bottom: 4px solid #f9a825;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+        }
+        .org-header .org-title {
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        .org-header .org-sub {
+            font-size: 14px;
+            color: #ffd54f;
+            margin-top: 2px;
+        }
+        .org-header .org-tagline {
+            font-size: 12px;
+            color: #a5d6a7;
+            margin-top: 4px;
+            border-top: 1px solid #3a6a4a;
+            padding-top: 5px;
+        }
+        .org-header .org-logo {
+            height: 50px;
+            width: auto;
+            border-radius: 10px;
+            border: 2px solid #f9a825;
+            padding: 3px;
+            background: white;
+            object-fit: contain;
+        }
+        .org-header .org-logo-placeholder {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            background: #f9a825;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a4a2a;
+            border: 2px solid white;
+        }
+
+        /* ====== تب‌ها ====== */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+            background: #1e4d2b;
+            padding: 10px;
+            border-radius: 0;
+        }
+        .tabs button {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            background: #3a6b47;
+            color: #ccc;
+            transition: 0.3s;
+            flex: 1;
+            min-width: 120px;
+        }
+        .tabs button:hover {
+            background: #5a8a67;
+            color: white;
+        }
+        .tabs button.active {
+            background: white;
+            color: #1e4d2b;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        /* ====== محتوای تب‌ها ====== */
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 16px 16px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ====== باکس آلارم ====== */
+        .alert-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 12px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: none;
+            direction: rtl;
+        }
+        .alert-box .alert-title {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+        .alert-box .alert-list {
+            margin-top: 10px;
+            list-style: none;
+            padding: 0;
+        }
+        .alert-box .alert-list li {
+            padding: 6px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            font-size: 14px;
+        }
+        .alert-box .alert-list li:last-child {
+            border-bottom: none;
+        }
+        .alert-box .alert-list .plant-name {
+            font-weight: bold;
+            color: #1e4d2b;
+        }
+        .alert-box .alert-list .task-type {
+            color: #e65100;
+            font-weight: bold;
+        }
+
+        /* ====== فرم ====== */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 25px;
+        }
+        .form-grid .full-width {
+            grid-column: 1 / -1;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #1e4d2b;
+            font-size: 13px;
+            margin-bottom: 3px;
+        }
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 8px 12px;
+            border: 1px solid #bdbdbd;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fafcfa;
+            transition: 0.3s;
+        }
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #2e7d32;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.2);
+        }
+        .form-group textarea {
+            height: 50px;
+            resize: vertical;
+        }
+        .form-group .hint {
+            font-size: 11px;
+            color: #888;
+            margin-top: 2px;
+        }
+
+        /* ====== عنوان‌های بخش‌ها ====== */
+        .section-title {
+            grid-column: 1 / -1;
+            background: #2e7d32;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 16px;
+            margin: 10px 0 5px 0;
+        }
+
+        /* ====== دکمه‌ها ====== */
+        .btn-group {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 20px 0 10px 0;
+        }
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            color: white;
+        }
+        .btn:hover {
+            transform: scale(1.04);
+            opacity: 0.9;
+        }
+        .btn-green { background: #1b5e20; }
+        .btn-teal { background: #00695c; }
+        .btn-blue { background: #0d47a1; }
+        .btn-red { background: #b71c1c; }
+        .btn-gray { background: #455a64; }
+        .btn-orange { background: #e65100; }
+        .btn-purple { background: #6a1b9a; }
+        .btn-purple:hover { background: #4a148c; }
+        .btn-sm {
+            padding: 4px 12px;
+            font-size: 12px;
+            border-radius: 8px;
+        }
+
+        /* ====== کارت شناسنامه ====== */
+        .plant-card {
+            background: #fafffe;
+            border: 1px solid #a5d6a7;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            direction: rtl;
+            page-break-inside: avoid;
+        }
+        .plant-card h2 {
+            background: #e8f5e9;
+            padding: 10px 18px;
+            border-radius: 12px;
+            color: #1e4d2b;
+            border-right: 8px solid #2e7d32;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .plant-card .plant-image {
+            max-width: 150px;
+            max-height: 150px;
+            border-radius: 12px;
+            border: 2px solid #a5d6a7;
+            object-fit: cover;
+        }
+        .plant-card .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 20px;
+        }
+        .plant-card .item {
+            padding: 4px 0;
+            border-bottom: 1px dashed #e0e0e0;
+            display: flex;
+            gap: 6px;
+            font-size: 14px;
+        }
+        .plant-card .item strong {
+            min-width: 120px;
+            color: #1e4d2b;
+        }
+        .plant-card .schedule-item {
+            background: #e8f5e9;
+            padding: 6px 12px;
+            border-radius: 8px;
+            margin-top: 4px;
+            font-size: 13px;
+        }
+        .plant-card .schedule-item .month-badge {
+            background: #2e7d32;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        /* ====== لیست گیاهان ====== */
+        .search-box {
+            width: 100%;
+            padding: 12px 18px;
+            border: 2px solid #a5d6a7;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .plant-list-item {
+            background: #f9fbe7;
+            border-right: 5px solid #2e7d32;
+            padding: 12px 18px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            transition: 0.3s;
+        }
+        .plant-list-item:hover {
+            background: #e8f5e9;
+            transform: translateX(-5px);
+        }
+        .plant-list-item .info {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+        .plant-list-item .info .click-area {
+            cursor: pointer;
+            flex: 1;
+        }
+        .plant-list-item .thumb {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid #ccc;
+        }
+        .plant-list-item .badge-count {
+            background: #2e7d32;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        .plant-list-item .action-buttons {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        /* ====== آمار ====== */
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: #e8f5e9;
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+        .stats span {
+            font-size: 15px;
+        }
+        .stats strong {
+            color: #1e4d2b;
+        }
+
+        /* ====== برچسب‌ها ====== */
+        .editing-badge {
+            background: #ff9800;
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        .admin-badge {
+            background: #2e7d32;
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-block;
+        }
+        .viewonly-banner {
+            background: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 15px;
+            display: none;
+        }
+        .viewonly-banner span {
+            background: white;
+            color: #e65100;
+            padding: 2px 14px;
+            border-radius: 20px;
+            margin: 0 5px;
+        }
+
+        /* ====== حالت نمایشی ====== */
+        .view-mode .btn-green,
+        .view-mode .btn-orange,
+        .view-mode .btn-red,
+        .view-mode .btn-gray,
+        .view-mode .action-buttons .btn-teal,
+        .view-mode .action-buttons .btn-red,
+        .view-mode .stats .btn-red {
+            display: none !important;
+        }
+        .view-mode .plant-list-item {
+            cursor: default !important;
+        }
+        .view-mode .plant-list-item:hover {
+            transform: none !important;
+        }
+        .view-mode .click-area {
+            cursor: default !important;
+        }
+
+        /* ====== بارگذاری ====== */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+            color: #555;
+        }
+        .loading .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid #2e7d32;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ====== واکنش‌گرا ====== */
+        @media (max-width: 700px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .plant-card .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .tabs button {
+                font-size: 13px;
+                padding: 10px 14px;
+                min-width: 80px;
+            }
+            .org-header .org-title {
+                font-size: 15px;
+            }
+            .org-header .org-sub {
+                font-size: 12px;
+            }
+            .org-header .org-logo {
+                height: 40px;
+            }
+            .plant-list-item {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .plant-list-item .action-buttons {
+                justify-content: flex-start;
+            }
+        }
+
+        /* ====== چاپ ====== */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .plant-card {
+                break-inside: avoid;
+                border: 1px solid #999;
+            }
+            .tabs,
+            .tab-content {
+                display: block !important;
+            }
+            #listTab,
+            #formTab {
+                display: none !important;
+            }
+            #previewTab {
+                display: block !important;
+            }
+            .org-header {
+                background: #0a1f12 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .alert-box {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ====== هدر سازمان ====== -->
+        <div class="org-header">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap;">
+                <img src="1234.jpg.jpg" class="org-logo" alt="آرم سازمان" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="org-logo-placeholder">س</div>
+                <div>
+                    <div class="org-title">سازمان سیما، منظر و فضای سبز شهری</div>
+                    <div class="org-sub">شهرداری ارومیه</div>
+                    <div class="org-tagline">🌿 اطلس و شناسنامه گیاهی فضای سبز شهر ارومیه 🌿</div>
+                </div>
+                <span style="font-size:24px;">🌿</span>
+            </div>
+        </div>
+
+        <!-- ====== بنر نمایشی ====== -->
+        <div id="viewBanner" class="viewonly-banner no-print">
+            🔒 این نسخه <span>فقط نمایشی</span> است | امکان تغییر اطلاعات وجود ندارد
+        </div>
+
+        <!-- ====== باکس آلارم ====== -->
+        <div id="alertBox" class="alert-box no-print">
+            <div class="alert-title">⏰ یادآوری امروز:</div>
+            <ul id="alertList" class="alert-list"></ul>
+        </div>
+
+        <!-- ====== تب‌ها ====== -->
+        <div class="tabs no-print">
+            <button class="active" onclick="window.switchTab('formTab')">📝 فرم ثبت</button>
+            <button onclick="window.switchTab('listTab')">📋 لیست گیاهان (<span id="countBadge">0</span>)</button>
+            <button onclick="window.switchTab('previewTab')">🖼️ شناسنامه</button>
+        </div>
+
+        <!-- ========== تب ۱: فرم ========== -->
+        <div id="formTab" class="tab-content active">
+            <h1 style="text-align:center; color:#1e4d2b; margin-bottom:20px;">
+                🌿 فرم ثبت شناسنامه گیاهی
+                <span id="editingBadge" class="editing-badge no-print" style="display:none;">✏️ در حال ویرایش</span>
+                <span id="adminBadge" class="admin-badge no-print" style="display:none;">👑 مدیر</span>
+            </h1>
+
+            <div id="adminForm" style="display:none;">
+                <div class="form-grid" id="inputForm">
+                    <!-- ====== بخش ۱: مشخصات عمومی ====== -->
+                    <div class="section-title">۱. مشخصات عمومی</div>
+                    <div class="form-group"><label>کد گیاه:</label><input type="text" id="code" placeholder="مثلاً GSU-002"></div>
+                    <div class="form-group"><label>نام محلی:</label><input type="text" id="localName" placeholder="مثلاً یاس زرد"></div>
+                    <div class="form-group"><label>نام فارسی:</label><input type="text" id="persianName" placeholder="مثلاً یاس زرد"></div>
+                    <div class="form-group"><label>خانواده گیاهی:</label><input type="text" id="family" placeholder="مثلاً Oleaceae"></div>
+                    <div class="form-group"><label>نام علمی:</label><input type="text" id="scientificName" placeholder="مثلاً Forsythia × intermedia"></div>
+                    <div class="form-group"><label>نوع گیاه:</label><input type="text" id="plantType" placeholder="مثلاً درختچه زینتی خزان‌کننده"></div>
+                    <div class="form-group"><label>نام انگلیسی:</label><input type="text" id="englishName" placeholder="مثلاً Border Forsythia"></div>
+                    <div class="form-group"><label>طول عمر:</label><input type="text" id="lifespan" placeholder="مثلاً چندساله"></div>
+                    <div class="form-group full-width"><label>منشأ:</label><input type="text" id="origin" placeholder="مثلاً شرق آسیا (چین و کره)"></div>
+
+                    <!-- ====== بخش ۲: مشخصات مورفولوژیک ====== -->
+                    <div class="section-title">۲. مشخصات مورفولوژیک</div>
+                    <div class="form-group"><label>ارتفاع در بلوغ:</label><input type="text" id="height" placeholder="مثلاً 2 تا 3 متر"></div>
+                    <div class="form-group"><label>عرض تاج:</label><input type="text" id="width" placeholder="مثلاً 2 تا 3 متر"></div>
+                    <div class="form-group"><label>فرم تاج:</label><input type="text" id="crownForm" placeholder="مثلاً گسترده و آبشاری"></div>
+                    <div class="form-group"><label>سرعت رشد:</label><input type="text" id="growthRate" placeholder="مثلاً متوسط تا سریع"></div>
+                    <div class="form-group"><label>نوع برگ:</label><input type="text" id="leafType" placeholder="مثلاً پهن برگ"></div>
+                    <div class="form-group"><label>رنگ برگ:</label><input type="text" id="leafColor" placeholder="مثلاً سبز روشن"></div>
+                    <div class="form-group"><label>رنگ پاییزه:</label><input type="text" id="fallColor" placeholder="مثلاً زرد متمایل به طلایی"></div>
+                    <div class="form-group"><label>نوع گل:</label><input type="text" id="flowerType" placeholder="مثلاً زنگوله‌ای"></div>
+                    <div class="form-group"><label>رنگ گل:</label><input type="text" id="flowerColor" placeholder="مثلاً زرد طلایی"></div>
+                    <div class="form-group"><label>فصل گلدهی:</label><input type="text" id="flowerSeason" placeholder="مثلاً اواخر زمستان تا اوایل بهار"></div>
+                    <div class="form-group"><label>زمان میوه‌دهی:</label><input type="text" id="fruitTime" placeholder="مثلاً محدود و فاقد ارزش زینتی"></div>
+                    <div class="form-group"><label>سیستم ریشه:</label><input type="text" id="rootSystem" placeholder="مثلاً نیمه عمیق و غیرمجموع"></div>
+                    <div class="form-group"><label>وضعیت برگ:</label><input type="text" id="leafStatus" placeholder="مثلاً خزان‌کننده"></div>
+
+                    <!-- ====== بخش ۳: مشخصات اکولوژیک ====== -->
+                    <div class="section-title">۳. مشخصات اکولوژیک</div>
+                    <div class="form-group"><label>نیاز نوری:</label><input type="text" id="light" placeholder="مثلاً آفتاب کامل تا نیم‌سایه"></div>
+                    <div class="form-group"><label>نیاز آبی:</label><input type="text" id="waterNeed" placeholder="مثلاً کم تا متوسط"></div>
+                    <div class="form-group"><label>تحمل گرما:</label><input type="text" id="heatTolerance" placeholder="متوسط"></div>
+                    <div class="form-group"><label>تحمل خشکی:</label><input type="text" id="droughtTolerance" placeholder="خوب"></div>
+                    <div class="form-group"><label>تحمل یخبندان:</label><input type="text" id="frostTolerance" placeholder="عالی"></div>
+                    <div class="form-group"><label>تحمل سرما:</label><input type="text" id="coldTolerance" placeholder="عالی"></div>
+                    <div class="form-group"><label>تحمل شوری خاک:</label><input type="text" id="saltTolerance" placeholder="متوسط"></div>
+                    <div class="form-group"><label>حداقل دمای قابل تحمل:</label><input type="text" id="minTemp" placeholder="مثلاً 20- درجه سانتی‌گراد"></div>
+                    <div class="form-group"><label>تحمل باد:</label><input type="text" id="windTolerance" placeholder="خوب"></div>
+                    <div class="form-group"><label>تحمل شوری آب:</label><input type="text" id="waterSalt" placeholder="متوسط"></div>
+                    <div class="form-group"><label>تحمل گردوغبار:</label><input type="text" id="dustTolerance" placeholder="خوب"></div>
+                    <div class="form-group"><label>تحمل آلودگی هوا:</label><input type="text" id="airPollution" placeholder="خوب"></div>
+
+                    <!-- ====== بخش ۴: الزامات کاشت ====== -->
+                    <div class="section-title">۴. الزامات کاشت</div>
+                    <div class="form-group"><label>فاصله کاشت:</label><input type="text" id="spacing" placeholder="مثلاً 1.5 تا 2 متر"></div>
+                    <div class="form-group"><label>فصل مناسب کاشت:</label><input type="text" id="plantingSeason" placeholder="مثلاً پاییز و اواخر زمستان"></div>
+                    <div class="form-group"><label>قطر چاله:</label><input type="text" id="holeDiameter" placeholder="مثلاً 50 تا 60 سانتی‌متر"></div>
+                    <div class="form-group"><label>عمق چاله:</label><input type="text" id="holeDepth" placeholder="مثلاً 50 سانتی‌متر"></div>
+                    <div class="form-group"><label>خاک مناسب:</label><input type="text" id="soilType" placeholder="مثلاً لومی شنی با زهکشی مناسب"></div>
+                    <div class="form-group"><label>دامنه pH:</label><input type="text" id="phRange" placeholder="مثلاً 6.5 تا 7.5"></div>
+                    <div class="form-group"><label>نیاز به زهکشی:</label><input type="text" id="drainage" placeholder="دارد / ندارد"></div>
+                    <div class="form-group"><label>نیاز به مالچ:</label><input type="text" id="mulch" placeholder="توصیه می‌شود / نمی‌شود"></div>
+                    <div class="form-group"><label>نیاز به قیم:</label><input type="text" id="stake" placeholder="دارد / ندارد"></div>
+                    <div class="form-group"><label>حداقل عرض بستر:</label><input type="text" id="bedWidth" placeholder="مثلاً 1 متر"></div>
+
+                    <!-- ====== بخش ۵: نیازهای نگهداری ====== -->
+                    <div class="section-title">۵. نیازهای نگهداری</div>
+                    <div class="form-group"><label>آبیاری سال اول:</label><input type="text" id="waterFirstYear" placeholder="مثلاً هر 5 تا 7 روز"></div>
+                    <div class="form-group"><label>آبیاری پس از استقرار:</label><input type="text" id="waterEstablished" placeholder="مثلاً هر 10 تا 15 روز"></div>
+                    <div class="form-group"><label>نیاز به هرس:</label><input type="text" id="pruningNeed" placeholder="متوسط / کم"></div>
+                    <div class="form-group"><label>نوع هرس:</label><input type="text" id="pruningType" placeholder="مثلاً هرس فرم‌دهی و حذف شاخه‌های پیر"></div>
+                    <div class="form-group"><label>آفات مهم:</label><input type="text" id="pests" placeholder="مثلاً شته‌ها، کنه‌ها"></div>
+                    <div class="form-group"><label>بیماری‌های مهم:</label><input type="text" id="diseases" placeholder="مثلاً لکه برگی و پوسیدگی ریشه"></div>
+                    <div class="form-group"><label>نیاز کودی:</label><input type="text" id="fertilizer" placeholder="کم تا متوسط"></div>
+
+                    <!-- زمانبندی سم‌پاشی -->
+                    <div class="form-group">
+                        <label>🗓️ زمانبندی سم‌پاشی (ماه):</label>
+                        <select id="sprayMonth">
+                            <option value="">-- انتخاب ماه --</option>
+                            <option value="فروردین">فروردین</option>
+                            <option value="اردیبهشت">اردیبهشت</option>
+                            <option value="خرداد">خرداد</option>
+                            <option value="تیر">تیر</option>
+                            <option value="مرداد">مرداد</option>
+                            <option value="شهریور">شهریور</option>
+                            <option value="مهر">مهر</option>
+                            <option value="آبان">آبان</option>
+                            <option value="آذر">آذر</option>
+                            <option value="دی">دی</option>
+                            <option value="بهمن">بهمن</option>
+                            <option value="اسفند">اسفند</option>
+                        </select>
+                        <div class="hint">ماه مورد نظر برای سم‌پاشی را انتخاب کنید</div>
+                    </div>
+
+                    <!-- زمانبندی کوددهی -->
+                    <div class="form-group">
+                        <label>🗓️ زمانبندی کوددهی (ماه):</label>
+                        <select id="fertilizeMonth">
+                            <option value="">-- انتخاب ماه --</option>
+                            <option value="فروردین">فروردین</option>
+                            <option value="اردیبهشت">اردیبهشت</option>
+                            <option value="خرداد">خرداد</option>
+                            <option value="تیر">تیر</option>
+                            <option value="مرداد">مرداد</option>
+                            <option value="شهریور">شهریور</option>
+                            <option value="مهر">مهر</option>
+                            <option value="آبان">آبان</option>
+                            <option value="آذر">آذر</option>
+                            <option value="دی">دی</option>
+                            <option value="بهمن">بهمن</option>
+                            <option value="اسفند">اسفند</option>
+                        </select>
+                        <div class="hint">ماه مورد نظر برای کوددهی را انتخاب کنید</div>
+                    </div>
+
+                    <!-- ====== بخش ۶: شاخص‌های اقتصادی ====== -->
+                    <div class="section-title">۶. شاخص‌های اقتصادی</div>
+                    <div class="form-group"><label>هزینه کاشت:</label><input type="text" id="costPlanting" placeholder="کم / متوسط / زیاد"></div>
+                    <div class="form-group"><label>قیمت هر نهال:</label><input type="text" id="price" placeholder="مثلاً بر اساس قیمت سالانه نهالستان"></div>
+                    <div class="form-group"><label>طول عمر اقتصادی:</label><input type="text" id="economicLife" placeholder="مثلاً ۲۰ تا ۳۰ سال"></div>
+                    <div class="form-group"><label>هزینه نگهداری:</label><input type="text" id="costMaintenance" placeholder="کم تا متوسط"></div>
+                    <div class="form-group"><label>امتیاز اقتصادی:</label><input type="text" id="economicScore" placeholder="مثلاً ۸ از ۱۰"></div>
+                    <div class="form-group"><label>هزینه جایگزینی:</label><input type="text" id="replacementCost" placeholder="کم / متوسط"></div>
+
+                    <!-- ====== بخش ۷: کاربرد در فضای سبز شهری ====== -->
+                    <div class="section-title">۷. کاربرد در فضای سبز شهری</div>
+                    <div class="form-group full-width"><label>کارکردهای اکولوژیک:</label><textarea id="ecoFunctions" placeholder="توصیف کارکردها..."></textarea></div>
+                    <div class="form-group full-width"><label>کاربری‌های مناسب:</label><textarea id="suitableUses" placeholder="مثلاً کاشت توده‌ای، پرچین، باغچه..."></textarea></div>
+
+                    <!-- ====== بخش ۸: ارزیابی سازگاری ====== -->
+                    <div class="section-title">۸. ارزیابی سازگاری</div>
+                    <div class="form-group"><label>سازگاری با کم‌آبی:</label><input type="text" id="adaptWater" placeholder="خوب / متوسط"></div>
+                    <div class="form-group"><label>سازگاری با اقلیم:</label><input type="text" id="adaptClimate" placeholder="بسیار مناسب / مناسب"></div>
+                    <div class="form-group"><label>تحمل گرمای تابستان:</label><input type="text" id="adaptHeat" placeholder="خوب"></div>
+                    <div class="form-group"><label>تحمل سرمای زمستان:</label><input type="text" id="adaptCold" placeholder="عالی"></div>
+                    <div class="form-group"><label>پتانسیل توسعه:</label><input type="text" id="adaptPotential" placeholder="زیاد / متوسط"></div>
+                    <div class="form-group"><label>اولویت کاشت:</label><input type="text" id="adaptPriority" placeholder="توصیه می‌شود / توصیه نمی‌شود"></div>
+                    <div class="form-group full-width"><label>محدودیت‌ها:</label><textarea id="adaptLimitations" placeholder="محدودیت‌های احتمالی را بنویسید..."></textarea></div>
+
+                    <!-- ====== بخش ۹: مشخصات نهالستان ====== -->
+                    <div class="section-title">۹. مشخصات نهالستان</div>
+                    <div class="form-group"><label>ارتفاع نهال:</label><input type="text" id="nHeight" placeholder="مثلاً 80 تا 120 سانتی‌متر"></div>
+                    <div class="form-group"><label>حجم گلدان:</label><input type="text" id="nPotSize" placeholder="مثلاً 7 تا 12 لیتر"></div>
+                    <div class="form-group"><label>درصد زنده‌مانی:</label><input type="text" id="nSurvival" placeholder="بیش از 90 درصد"></div>
+                    <div class="form-group"><label>سن نهال:</label><input type="text" id="nAge" placeholder="مثلاً 2 تا 3 سال"></div>
+                    <div class="form-group"><label>قطر یقه:</label><input type="text" id="nCollar" placeholder="مثلاً 1 تا 2 سانتی‌متر"></div>
+                    <div class="form-group"><label>وضعیت ریشه:</label><input type="text" id="nRoot" placeholder="سالم و متراکم"></div>
+
+                    <!-- ====== بخش ۱۰: توصیه فنی ====== -->
+                    <div class="section-title">۱۰. توصیه فنی (اختصاصی)</div>
+                    <div class="form-group"><label>الگوی کاشت پیشنهادی:</label><input type="text" id="techPattern" placeholder="مثلاً کاشت توده‌ای 5 تا 15 بوته"></div>
+                    <div class="form-group"><label>فاصله از پیاده‌رو:</label><input type="text" id="techSetback" placeholder="مثلاً حداقل 0.75 متر"></div>
+                    <div class="form-group"><label>ترکیب پیشنهادی:</label><input type="text" id="techCombo" placeholder="مثلاً یاس زرد + اسطوخودوس + رزماری"></div>
+                    <div class="form-group"><label>تعداد پیشنهادی:</label><input type="text" id="techQty" placeholder="مثلاً 3 تا 4 بوته در هر 10 متر"></div>
+                    <div class="form-group"><label>سرانه آب تقریبی:</label><input type="text" id="techWater" placeholder="مثلاً 250 تا 350 مترمکعب در هکتار"></div>
+
+                    <!-- ====== تصویر گیاه ====== -->
+                    <div class="section-title">🖼️ تصویر گیاه</div>
+                    <div class="form-group full-width">
+                        <label>آپلود عکس گیاه:</label>
+                        <input type="file" id="plantImage" accept="image/*" onchange="window.previewImage(event)">
+                        <div class="hint">عکس را انتخاب کنید تا در شناسنامه نمایش داده شود</div>
+                        <img id="imagePreview" style="max-width:150px; max-height:150px; margin-top:8px; border-radius:10px; border:1px solid #ccc; display:none;">
+                    </div>
+
+                    <!-- ====== دکمه‌ها ====== -->
+                    <div class="btn-group">
+                        <button class="btn btn-green" onclick="window.savePlant()">💾 ذخیره گیاه</button>
+                        <button class="btn btn-orange" onclick="window.cancelEdit()" id="cancelEditBtn" style="display:none;">❌ انصراف از ویرایش</button>
+                        <button class="btn btn-teal" onclick="window.generateCard()">🖼️ نمایش شناسنامه</button>
+                        <button class="btn btn-gray" onclick="window.clearForm()">🔄 پاک کردن فرم</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- پیام عدم دسترسی -->
+            <div id="viewOnlyMessage" style="text-align:center; padding:40px; color:#888; display:none;">
+                <div style="font-size:48px; margin-bottom:15px;">🔒</div>
+                <h3 style="color:#555;">شما دسترسی مدیریت ندارید</h3>
+                <p style="margin-top:10px;">برای افزودن یا ویرایش اطلاعات، با مدیر سیستم تماس بگیرید.</p>
+            </div>
+        </div>
+
+        <!-- ========== تب ۲: لیست گیاهان ========== -->
+        <div id="listTab" class="tab-content">
+            <h2 style="color:#1e4d2b;">📋 لیست تمام گیاهان</h2>
+            <div class="stats">
+                <span>🌱 تعداد کل: <strong id="totalCount">0</strong></span>
+                <span>📅 آخرین به‌روزرسانی: <strong id="lastUpdate">-</strong></span>
+                <button class="btn btn-red" style="padding:6px 16px; font-size:13px; display:none;" id="deleteAllBtn" onclick="window.deleteAllPlants()">🗑️ حذف همه</button>
+                <button class="btn btn-blue" style="padding:6px 16px; font-size:13px;" onclick="window.exportExcel()">📊 خروجی اکسل</button>
+                <button class="btn btn-purple" style="padding:6px 16px; font-size:13px;" onclick="window.loginAsAdmin()">🔑 ورود مدیریت</button>
+                <button class="btn btn-orange" style="padding:6px 16px; font-size:13px; display:none;" id="logoutBtn" onclick="window.logoutAdmin()">🚪 خروج از مدیریت</button>
+            </div>
+            <input class="search-box" type="text" id="searchInput" placeholder="🔍 جستجو در بین گیاهان..." oninput="window.renderList()">
+            <div id="plantListContainer"></div>
+        </div>
+
+        <!-- ========== تب ۳: شناسنامه ========== -->
+        <div id="previewTab" class="tab-content">
+            <h2 style="color:#1e4d2b; text-align:center;">🖼️ شناسنامه گیاه</h2>
+            <div id="cardContainer"></div>
+            <div style="text-align:center; margin-top:15px;" class="no-print">
+                <button class="btn btn-blue" onclick="window.print()">🖨️ چاپ شناسنامه</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ====== بارگذاری ماژول‌ها ====== -->
+    <script type="module" src="app.js"></script>
+
+</body>
+</html>
