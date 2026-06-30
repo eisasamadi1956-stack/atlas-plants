@@ -1,24 +1,9 @@
-// ============================================================
-//  تنظیمات کلی برنامه
-// ============================================================
-
 export const CONFIG = {
-    // کلید ذخیره‌سازی در LocalStorage
     DB_KEY: 'atlas_plants_db',
-
-    // فاصله زمانی بررسی آلارم‌ها (میلی‌ثانیه) - ۵ دقیقه
     ALERT_INTERVAL: 300000,
-
-    // نام ماه‌های شمسی (به ترتیب صحیح)
     PERSIAN_MONTHS: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
-
-    // لینک Google Sheets (لینک شما)
-    GOOGLE_SHEETS_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQ1HYAcYrqRMuRslAvDEt2htlLdV5RTIR9COPa3ynnk2D6DoIXSoS0il9mD1N9ESDd5j6_tbcgAQ88N/pub?output=csv',
-
-    // رمز عبور مدیریت
+    GOOGLE_SHEETS_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQRzX3lNBY-4Hi1yA0wU2RsXGHTB8zUevZxuFvOZCvjnm85v8GP-/pub?output=csv',
     ADMIN_PASSWORD: 'admin1404',
-
-    // ساختار پیش‌فرض یک گیاه (برای ایجاد نمونه جدید)
     DEFAULT_PLANT: {
         id: null,
         code: '',
