@@ -2,7 +2,7 @@ export const CONFIG = {
     DB_KEY: 'atlas_plants_db',
     ALERT_INTERVAL: 300000,
     PERSIAN_MONTHS: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
-    GOOGLE_SHEETS_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQRzX3lNBY-4Hi1yA0wU2RsXGHTB8zUevZxuFvOZCvjnm85v8GP-/pub?output=csv',
+    GOOGLE_SHEETS_URL: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS3pyO9UVuGjr5fGrz3ifoxYs-3mapKn617XtdlRI8vNxzrsV7fJSktvdOV_sfHfSF6o3Ej9-W4N4uY/pub?output=csv',
     ADMIN_PASSWORD: 'admin1404',
     DEFAULT_PLANT: {
         id: null,
